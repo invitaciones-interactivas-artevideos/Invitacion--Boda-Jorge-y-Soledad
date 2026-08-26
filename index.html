@@ -143,7 +143,7 @@
         .txt-mes { font-family: var(--mes-fuente); color: var(--mes-color); font-size: var(--mes-tamano); margin-bottom: 20px; line-height: 1; }
         .txt-faltan { font-family: var(--faltan-fuente); color: var(--faltan-color); font-size: var(--faltan-tamano); margin-bottom: 10px; }
 
-        .button-call { display: inline-block; background-color: var(--color-secundario-rosa-fuerte); color: white; text-decoration: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; margin-top: 20px; position: relative; z-index: 20; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; font-size: 0.9rem;}
+        .button-call { display: inline-block; background-color: var(--color-secundario-rosa-fuerte); color: white; text-decoration: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; margin-top: 20px; position: relative; z-index: 20; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; font-size: 0.9rem; max-width: 100%; word-break: break-word;}
         
         .marco-elegante { 
             position: relative; 
@@ -174,15 +174,16 @@
         .gallery-slide { display: flex; transition: transform 0.5s ease-in-out; }
         .gallery-item { min-width: 100%; padding: 0 10px; }
         .gallery-item-frame { width: 100%; height: 250px; border: 4px solid var(--color-dorado-claro); border-radius: 15px; overflow: hidden; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
         .gallery-nav { display: flex; justify-content: space-around; margin-top: 15px; }
         .gallery-nav button { background-color: var(--color-secundario-rosa-fuerte); color: white; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; position: relative; z-index: 20; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
-        .modal-content { background-color: var(--color-fondo-crema); background-image: url('fondo.png'); background-size: cover; padding: 30px; border-radius: 15px; text-align: center; max-width: 90%; width: 350px; position: relative; border: 2px solid var(--color-dorado-brillante); transform: translateY(-20px); transition: transform 0.3s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-content { background-color: var(--color-fondo-crema); background-image: url('fondo.png'); background-size: cover; padding: 30px; border-radius: 15px; text-align: center; max-width: 90%; width: 350px; position: relative; border: 2px solid var(--color-dorado-brillante); transform: translateY(-20px); transition: transform 0.3s; max-height: 90vh; overflow-y: auto; }
         .modal-overlay.show { opacity: 1; }
         .modal-overlay.show .modal-content { transform: translateY(0); }
-        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer; color: var(--color-secundario-rosa-fuerte); line-height: 1; }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer; color: var(--color-secundario-rosa-fuerte); line-height: 1; z-index: 10000; }
+        
         .datos-banco { font-family: sans-serif; color: #4a4a4a; text-align: left; margin-top: 15px; line-height: 1.6; font-size: 0.95rem; }
 
         /* DECORACIONES PNG */
@@ -207,23 +208,50 @@
         <i id="musicIcon" class="fas fa-play"></i>
     </button>
 
-    <div id="modalBanco" class="modal-overlay">
-        <div class="modal-content">
+    <!-- MODAL DE DATOS BANCARIOS (AHORA CON 2 CUENTAS) -->
+    <div id="modalBanco" class="modal-overlay" onclick="cerrarModal(false, event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-modal" onclick="cerrarModal()">&times;</span>
-            <p class="title-fancy" style="font-size: 2.5rem; margin-bottom: 5px;">Datos Bancarios</p>
+            <p class="title-fancy" style="font-size: 2.5rem; margin-bottom: 5px;">Regalo</p>
             <i class="fas fa-university" style="font-size: 2rem; color: var(--color-dorado-brillante);"></i>
             <div class="datos-banco">
-                <p><strong>Banco:</strong> BROU</p>
-                <p><strong>Caja de Ahorro $:</strong> 1234567-8</p>
-                <p><strong>Titular:</strong> Juan Pérez</p>
+                <!-- Cuenta 1 -->
+                <div style="margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
+                    <p><strong>Banco:</strong> BROU</p>
+                    <p><strong>Titular:</strong> Jorge</p>
+                    <p><strong>Cuenta:</strong> <span id="cuenta1">1234567-8</span></p>
+                    <div style="text-align: center;">
+                        <button class="button-call" style="padding: 6px 15px; font-size: 0.75rem; margin-top: 10px;" onclick="copiarTexto('cuenta1')"><i class="far fa-copy"></i> COPIAR CUENTA 1</button>
+                    </div>
+                </div>
+                
+                <hr class="divider" style="margin: 10px auto; width: 100%;">
+                
+                <!-- Cuenta 2 -->
+                <div style="margin-top: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
+                    <p><strong>Banco:</strong> Itaú</p>
+                    <p><strong>Titular:</strong> Soledad</p>
+                    <p><strong>Cuenta:</strong> <span id="cuenta2">9876543-2</span></p>
+                    <div style="text-align: center;">
+                        <button class="button-call" style="padding: 6px 15px; font-size: 0.75rem; margin-top: 10px;" onclick="copiarTexto('cuenta2')"><i class="far fa-copy"></i> COPIAR CUENTA 2</button>
+                    </div>
+                </div>
+                
+                <p id="mensajeCopiado" style="color: green; font-weight: bold; font-size: 0.95rem; margin-top: 15px; display: none; text-align: center;">¡Número de cuenta copiado!</p>
             </div>
         </div>
     </div>
 
+    <!-- NUEVO MODAL PARA AMPLIAR FOTOS DE LA GALERÍA -->
+    <div id="modalImagen" class="modal-overlay" onclick="cerrarModalImagen()">
+        <span class="close-modal" style="color: white; text-shadow: 0 0 10px black; top: 15px; right: 20px;">&times;</span>
+        <img id="imagenAmpliada" src="" alt="Ampliada" style="max-width: 95%; max-height: 80vh; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.8); border: 2px solid var(--color-dorado-claro); object-fit: contain;" onclick="event.stopPropagation()">
+    </div>
+
     <div class="invitation-container">
-        <!-- FONDO DINÁMICO (Se controla por JS) -->
+        <!-- FONDO DINÁMICO -->
         <div class="animated-bg-wrapper" id="bg-wrapper">
-            <!-- El contenido se inyectará aquí (Imagen o Video) -->
+            <!-- El contenido se inyectará aquí -->
         </div>
 
         <!-- PORTADA -->
@@ -250,8 +278,6 @@
                     <p style="font-style: italic;">"Hay momentos inolvidables<br> que se atesoran en el<br> corazón para siempre,<br> acompáñanos a vivir el nuestro."</p>
                 </section>
 
-             
-
                 <!-- RESERVA LA FECHA -->
                 <section class="gold-section" id="sec-reserva">
                     <p class="txt-reserva">Agendá la fecha</p>
@@ -273,7 +299,7 @@
                     </div>
                 </section>
 
-                <!-- DÓNDE: CEREMONIA Y FIESTA -->
+                <!-- DÓNDE: CEREMONIA Y FIESTA (Corregido aspecto de los botones) -->
                 <section class="gold-section" id="sec-donde">
                     <p class="title-fancy">Dónde</p>
 
@@ -285,7 +311,7 @@
                     <p style="font-weight: bold;">Parroquia Santa Rosa de Lima</p>
                     <p>Av. Naciones Unidas y Av. Costanera. El Pinar</p>
                     <p style="margin-top: 8px; color: var(--color-secundario-rosa-fuerte); font-weight: bold;"><i class="far fa-clock"></i> Horario: a confirmar hs</p>
-                    <a href="LINK_MAPS_CEREMONIA" class="button-call">https://maps.app.goo.gl/nLxjzZgoZnEqfPuEA</a>
+                    <a href="https://maps.app.goo.gl/nLxjzZgoZnEqfPuEA" class="button-call" target="_blank">UBICACIÓN IGLESIA</a>
 
                     <hr class="divider">
 
@@ -297,7 +323,7 @@
                     <p style="font-weight: bold;">Club Parque Policial</p>
                     <p>James Summer y Cedros, Solymar</p>
                     <p style="margin-top: 8px; color: var(--color-secundario-rosa-fuerte); font-weight: bold;"><i class="far fa-clock"></i> Horario: a confirmar</p>
-                    <a href="LINK_MAPS_FIESTA" class="button-call">https://maps.app.goo.gl/eNeNLxd8LcLukdEZ7</a>
+                    <a href="https://maps.app.goo.gl/eNeNLxd8LcLukdEZ7" class="button-call" target="_blank">UBICACIÓN SALÓN</a>
                 </section>
 
                 <!-- VESTIMENTA -->
@@ -327,17 +353,17 @@
                     <a href="LINK_DE_TU_FORMULARIO" id="btn-form" class="button-call" style="display: none;">CONFIRMAR ASISTENCIA</a>
                 </section>
 
-                <!-- GALERÍA -->
+                <!-- GALERÍA (Se agregó el onclick para abrir imagen) -->
                 <section class="gold-section" id="sec-galeria">
                     <p class="title-fancy">Galería</p>
                     <div class="gallery-container">
                         <div class="gallery-slide" id="gallerySlide">
-                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto1.jpeg" onerror="this.style.display='none'"></div></div>
-                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto2.jpeg" onerror="this.style.display='none'"></div></div>
-                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto3.jpeg" onerror="this.style.display='none'"></div></div>
-                             <div class="gallery-item"><div class="gallery-item-frame"><img src="foto4.jpeg" onerror="this.style.display='none'"></div></div>
-                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto5.jpeg" onerror="this.style.display='none'"></div></div>
-                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto6.jpeg" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto1.jpeg" onclick="abrirModalImagen(this.src)" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto2.jpeg" onclick="abrirModalImagen(this.src)" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto3.jpeg" onclick="abrirModalImagen(this.src)" onerror="this.style.display='none'"></div></div>
+                             <div class="gallery-item"><div class="gallery-item-frame"><img src="foto4.jpeg" onclick="abrirModalImagen(this.src)" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto5.jpeg" onclick="abrirModalImagen(this.src)" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto6.jpeg" onclick="abrirModalImagen(this.src)" onerror="this.style.display='none'"></div></div>
                         </div>
                     </div>
                     <div class="gallery-nav">
@@ -375,7 +401,6 @@
 
                 <div style="text-align: center; margin-top: 50px; padding-bottom: 60px; position: relative; z-index: 5;" id="sec-despedida">
                     <p class="title-fancy" style="font-size: 3rem; position: relative; z-index: 20; margin-bottom: 15px;">¡No Falten!</p>
-                    <!-- Imagen de cierre alargada -->
                     <img src="cierre.png" alt="Decoración de cierre" style="width: 200px; max-width: 80%; object-fit: contain; opacity: 0.9;" onerror="this.style.display='none'">
                 </div>
             </div>
@@ -387,15 +412,10 @@
         // ⚙️ PANEL GENERAL DE CONFIGURACIÓN JS
         // =========================================================================
         const CONF_INVITACION = {
-            // Fondo Interior
-            tipoFondo: "imagen",           // Escribe "imagen" o "video"
-            urlFondoImagen: "fondo.png",   // Nombre de la imagen si tipoFondo es "imagen"
-            urlFondoVideo: "fondo.mp4",    // Nombre del video si tipoFondo es "video"
-
-            // Detalles del Lacre
+            tipoFondo: "imagen",           
+            urlFondoImagen: "fondo.png",   
+            urlFondoVideo: "fondo.mp4",    
             letraSello: "M&J",
-            
-            // Opciones de visibilidad
             mostrarFotoPrincipal: false,    
             mostrarGaleria: true,          
             mostrarMusica: true,           
@@ -403,15 +423,9 @@
             mostrarSugerenciaCancion: true,
             mostrarAlbumFotos: true,       
             mostrarInstagram: true,  
-            
-            // Fecha del evento
             mesEvento: 11,                  
             anioEvento: 2026,              
             fechaExactaEvento: "november 21, 2026 21:00:00" 
-        };
-
-        const CONFIG_DECORACIONES = {
-            secIntro: { imagen: "", tamano: "112px", anclajeVertical: "arriba", distanciaVertical: "-80px", anclajeHorizontal: "derecha", distanciaHorizontal: "0px", voltearEspejo: true, animacionFlotar: true }
         };
 
         const cover = document.getElementById('cover');
@@ -420,14 +434,17 @@
         const musicBtn = document.getElementById('musicPlayBtn');
         const musicIcon = document.getElementById('musicIcon');
         const gallerySlide = document.getElementById('gallerySlide');
-        const modal = document.getElementById('modalBanco');
+        
+        const modalBanco = document.getElementById('modalBanco');
+        const modalImagen = document.getElementById('modalImagen');
         
         let isPlaying = false;
         let currentGallerySlide = 0;
         let modalAbiertoPorHistorial = false;
+        let modalImgAbiertoPorHistorial = false;
 
         function aplicarConfiguracion() {
-            // 1. Configurar Fondo Interior
+            // Fondo
             const bgWrapper = document.getElementById('bg-wrapper');
             if (CONF_INVITACION.tipoFondo === 'video') {
                 bgWrapper.innerHTML = `<video autoplay muted loop playsinline><source src="${CONF_INVITACION.urlFondoVideo}" type="video/mp4"></video>`;
@@ -437,16 +454,24 @@
                 bgWrapper.style.backgroundPosition = 'center';
             }
 
-            // 2. Configurar Secciones
-            if (!CONF_INVITACION.mostrarFotoPrincipal) document.getElementById('sec-foto-principal').style.display = 'none';
-            if (!CONF_INVITACION.mostrarGaleria) document.getElementById('sec-galeria').style.display = 'none';
+            // Ocultar de manera segura verificando que los IDs existan
+            const secFoto = document.getElementById('sec-foto-principal');
+            if (secFoto && !CONF_INVITACION.mostrarFotoPrincipal) secFoto.style.display = 'none';
+            
+            const secGaleria = document.getElementById('sec-galeria');
+            if (secGaleria && !CONF_INVITACION.mostrarGaleria) secGaleria.style.display = 'none';
 
-            if (CONF_INVITACION.confirmarConFormulario) {
-                document.getElementById('btn-whatsapp').style.display = 'none';
-                document.getElementById('btn-form').style.display = 'inline-block';
-            } else {
-                document.getElementById('btn-whatsapp').style.display = 'inline-block';
-                document.getElementById('btn-form').style.display = 'none';
+            // Confirmación segura
+            const btnWhatsapp = document.getElementById('btn-whatsapp');
+            const btnForm = document.getElementById('btn-form');
+            if(btnWhatsapp && btnForm) {
+                if (CONF_INVITACION.confirmarConFormulario) {
+                    btnWhatsapp.style.display = 'none';
+                    btnForm.style.display = 'inline-block';
+                } else {
+                    btnWhatsapp.style.display = 'inline-block';
+                    btnForm.style.display = 'none';
+                }
             }
 
             if(CONF_INVITACION.mostrarSugerenciaCancion) document.getElementById('sec-cancion').style.display = 'block';
@@ -488,16 +513,23 @@
             isPlaying = !isPlaying;
         }
 
+        /* --- CONTROL DEL MODAL DE DATOS BANCARIOS --- */
         function abrirModal() {
-            modal.style.display = "flex";
-            setTimeout(() => modal.classList.add('show'), 10);
+            modalBanco.style.display = "flex";
+            setTimeout(() => modalBanco.classList.add('show'), 10);
             history.pushState({ modalOpen: true }, "", window.location.href);
             modalAbiertoPorHistorial = true;
         }
 
-        function cerrarModal(desdePopState = false) {
-            modal.classList.remove('show');
-            setTimeout(() => modal.style.display = "none", 300);
+        function cerrarModal(desdePopState = false, event = null) {
+            if (event && event.target === modalBanco) {
+                // Permite cerrar si se toca afuera de la caja
+            } else if (event) {
+                return;
+            }
+            
+            modalBanco.classList.remove('show');
+            setTimeout(() => modalBanco.style.display = "none", 300);
             if (modalAbiertoPorHistorial && !desdePopState) {
                 modalAbiertoPorHistorial = false;
                 history.back();
@@ -505,9 +537,46 @@
                 modalAbiertoPorHistorial = false;
             }
         }
+        
+        // Función para copiar cuentas
+        function copiarTexto(idElemento) {
+            const texto = document.getElementById(idElemento).innerText;
+            navigator.clipboard.writeText(texto).then(() => {
+                const mensaje = document.getElementById('mensajeCopiado');
+                mensaje.style.display = 'block';
+                setTimeout(() => {
+                    mensaje.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('Error al copiar el texto: ', err);
+            });
+        }
 
+        /* --- CONTROL DEL MODAL DE IMÁGENES (LIGHTBOX) --- */
+        function abrirModalImagen(src) {
+            const img = document.getElementById('imagenAmpliada');
+            img.src = src;
+            modalImagen.style.display = "flex";
+            setTimeout(() => modalImagen.classList.add('show'), 10);
+            history.pushState({ modalImgOpen: true }, "", window.location.href);
+            modalImgAbiertoPorHistorial = true;
+        }
+
+        function cerrarModalImagen(desdePopState = false) {
+            modalImagen.classList.remove('show');
+            setTimeout(() => modalImagen.style.display = "none", 300);
+            if (modalImgAbiertoPorHistorial && !desdePopState) {
+                modalImgAbiertoPorHistorial = false;
+                history.back();
+            } else {
+                modalImgAbiertoPorHistorial = false;
+            }
+        }
+
+        // Manejo del botón atrás del celular (Cierra los popups en lugar de salir de la web)
         window.addEventListener('popstate', (event) => {
-            if (modal.style.display === "flex") cerrarModal(true);
+            if (modalBanco.style.display === "flex") cerrarModal(true);
+            if (modalImagen.style.display === "flex") cerrarModalImagen(true);
         });
 
         function generateCalendar(month, year, highlightDay) {
