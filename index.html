@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Invitación de Boda</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ========================================================================= */
+        /* 🎨 PANEL DE DISEÑO: VARIABLES DE EDICIÓN FÁCIL (CSS)                    */
+        /* ========================================================================= */
+        :root {
+            /* 1. COLORES GENERALES */
+            --color-principal-rosa: #fbf8f1;
+            --color-secundario-rosa-fuerte: #a27e46; /* Tonos tierra/dorado apagado */
+            --color-dorado-brillante: #946d24;      /* Dorado principal legible */
+            --color-dorado-claro: #d4bc8b;          /* Dorado para bordes y detalles */
+            --color-fondo-crema: #fffdf5;
+
+            /* 2. FUENTES DISPONIBLES */
+            --fuente-elegante: 'Great Vibes', cursive;
+            --fuente-texto: 'Playfair Display', serif;
+
+            /* 3. IMÁGENES DE LA PORTADA */
+            --fondo-portada-img: url('fondodesobre.png'); 
+
+            /* 4. POSICIÓN DE TEXTOS DE LA PORTADA */
+            --texto-mis15-tamano: 1.5rem; 
+            --titulos-mover-arriba-abajo: -10px; 
+
+            /* 5. DISEÑO DE LAS CAJAS GENERALES (Transparencia Editable) */
+            --cajas-fuente: var(--fuente-texto);
+            --cajas-fondo-color: rgba(255, 255, 255, 0.55);
+            --cajas-color-texto: #4a4a4a;
+            --cajas-tamano-texto: 1.1rem;
+            --cajas-interlineado: 1.6;
+            --cajas-margen-interno: 35px 25px;
+
+            /* 6. DISEÑO DE TEXTOS ESPECÍFICOS */
+            --reserva-fecha-fuente: var(--fuente-elegante);
+            --reserva-fecha-color: var(--color-dorado-brillante);
+            --reserva-fecha-tamano: 2.8rem;
+
+            --mes-fuente: var(--fuente-elegante);
+            --mes-color: var(--color-dorado-brillante);
+            --mes-tamano: 2.4rem;
+
+            --faltan-fuente: var(--fuente-elegante);
+            --faltan-color: var(--color-dorado-brillante);
+            --faltan-tamano: 2.6rem;
+        }
+
+        /* --- ESTILOS ESTRUCTURALES Y RESPONSIVOS --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--fuente-texto); background-color: #222; color: var(--cajas-color-texto); overflow-x: hidden; display: flex; justify-content: center; }
+
+        .invitation-container {
+            width: 100%; max-width: 450px; background-color: var(--color-fondo-crema); min-height: 100vh;
+            position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.5); overflow: hidden; 
+        }
+
+        /* FONDO INTERIOR (Video o Imagen) */
+        .animated-bg-wrapper { 
+            position: fixed; top: 0; left: 50%; transform: translateX(-50%); 
+            width: 100%; max-width: 450px; height: 100vh; z-index: 1; overflow: hidden; 
+        }
+        .animated-bg-wrapper video { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+
+        /* PORTADA */
+        #cover {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--color-principal-rosa);
+            background-image: var(--fondo-portada-img); background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; cursor: pointer; transition: opacity 0.8s ease-in-out;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+        }
+        #cover.hidden { opacity: 0; pointer-events: none; }
+        
+        .cover-titles { position: relative; z-index: 10; text-align: center; transform: translateY(var(--titulos-mover-arriba-abajo)); }
+        .cover-name { font-family: var(--fuente-elegante); font-size: 3rem; color: var(--color-secundario-rosa-fuerte); margin: 10px 0;}
+        
+        /* FLECHA Y TEXTO "VER INVITACIÓN" ANIMADO */
+        .ver-invitacion-wrapper {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-secundario-rosa-fuerte);
+            z-index: 20;
+            text-shadow: 0px 0px 10px rgba(255,255,255,0.9), 0px 0px 5px rgba(255,255,255,0.9);
+        }
+
+        .ver-invitacion-texto {
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            font-family: var(--fuente-texto);
+        }
+
+        .flecha-animada {
+            font-size: 1.5rem;
+            animation: bounceArrow 2s infinite;
+        }
+
+        @keyframes bounceArrow {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(10px);
+            }
+            60% {
+                transform: translateY(5px);
+            }
+        }
+
+        .play-btn-discreto { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.9); border: 2px solid var(--color-dorado-brillante); color: var(--color-secundario-rosa-fuerte); font-size: 1.3rem; z-index: 1000; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: none; justify-content: center; align-items: center; transition: transform 0.3s; }
+        .play-btn-discreto:hover { transform: scale(1.1); }
+
+        #main-invitation { display: none; position: relative; z-index: 5; }
+        .content-layer { position: relative; z-index: 5; padding: 40px 20px; min-height: 100vh; }
+
+        .gold-section {
+            background-color: var(--cajas-fondo-color); backdrop-filter: blur(4px);
+            border: 2px solid var(--color-dorado-brillante); border-radius: 15px;
+            padding: var(--cajas-margen-interno); margin-bottom: 40px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); position: relative; z-index: 5; text-align: center;
+            font-family: var(--cajas-fuente); font-size: var(--cajas-tamano-texto); line-height: var(--cajas-interlineado);
+        }
+
+        .title-fancy { font-family: var(--fuente-elegante); font-size: 3.2rem; color: var(--color-dorado-brillante); margin-bottom: 0px; }
+        .subtitle-gold { font-family: var(--fuente-texto); font-size: 1.6rem; color: var(--color-secundario-rosa-fuerte); margin: 15px 0 10px; font-weight: bold; border-bottom: 1px solid var(--color-dorado-claro); display: inline-block; padding-bottom: 5px;}
+        
+        .txt-reserva { font-family: var(--reserva-fecha-fuente); color: var(--reserva-fecha-color); font-size: var(--reserva-fecha-tamano); margin-bottom: -5px; }
+        .txt-mes { font-family: var(--mes-fuente); color: var(--mes-color); font-size: var(--mes-tamano); margin-bottom: 20px; line-height: 1; }
+        .txt-faltan { font-family: var(--faltan-fuente); color: var(--faltan-color); font-size: var(--faltan-tamano); margin-bottom: 10px; }
+
+        .button-call { display: inline-block; background-color: var(--color-secundario-rosa-fuerte); color: white; text-decoration: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; margin-top: 20px; position: relative; z-index: 20; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; font-size: 0.9rem;}
+        
+        .marco-elegante { 
+            position: relative; 
+            border: 6px double var(--color-dorado-brillante); 
+            border-radius: 12px; 
+            padding: 8px; 
+            background-color: var(--color-fondo-crema); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+            margin: 0 auto 40px; 
+            width: 90%; 
+            text-align: center; 
+        }
+        .marco-elegante img { width: 100%; border-radius: 8px; display: block; }
+        
+        hr.divider { border: 0; height: 1px; background: var(--color-dorado-claro); margin: 30px auto; width: 80%; }
+
+        .calendar { width: 100%; font-family: sans-serif; border-collapse: collapse; margin: 10px 0 20px; table-layout: fixed; font-size: 0.95rem; }
+        .calendar th, .calendar td { text-align: center; padding: 10px 0; }
+        .calendar th { color: var(--color-dorado-brillante); }
+        .calendar .highlight-date { background-color: var(--color-secundario-rosa-fuerte); color: white; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
+
+        .countdown-box { display: flex; justify-content: space-between; margin-top: 15px; font-family: sans-serif; gap: 4px; }
+        .countdown-item { background: rgba(255, 255, 255, 0.7); border: 1px solid var(--color-dorado-claro); border-radius: 8px; padding: 8px 2px; width: 24%; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .countdown-number { font-family: var(--fuente-texto); font-size: 2.2rem; font-weight: normal; color: var(--color-secundario-rosa-fuerte); display: block; }
+        .countdown-label { font-size: 0.6rem; text-transform: uppercase; color: #555; margin-top: 4px; white-space: nowrap; display: block; }
+
+        .gallery-container { width: 100%; overflow: hidden; position: relative; margin: 20px 0; }
+        .gallery-slide { display: flex; transition: transform 0.5s ease-in-out; }
+        .gallery-item { min-width: 100%; padding: 0 10px; }
+        .gallery-item-frame { width: 100%; height: 250px; border: 4px solid var(--color-dorado-claro); border-radius: 15px; overflow: hidden; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-nav { display: flex; justify-content: space-around; margin-top: 15px; }
+        .gallery-nav button { background-color: var(--color-secundario-rosa-fuerte); color: white; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; position: relative; z-index: 20; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-content { background-color: var(--color-fondo-crema); background-image: url('fondo.png'); background-size: cover; padding: 30px; border-radius: 15px; text-align: center; max-width: 90%; width: 350px; position: relative; border: 2px solid var(--color-dorado-brillante); transform: translateY(-20px); transition: transform 0.3s; }
+        .modal-overlay.show { opacity: 1; }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer; color: var(--color-secundario-rosa-fuerte); line-height: 1; }
+        .datos-banco { font-family: sans-serif; color: #4a4a4a; text-align: left; margin-top: 15px; line-height: 1.6; font-size: 0.95rem; }
+
+        /* DECORACIONES PNG */
+        .decorador-wrapper { position: absolute; z-index: 10; pointer-events: none; }
+        .decorador-img { display: block; filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.15)); }
+        
+        .decor-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 
+            0% { transform: translateY(0px) var(--espejo, scaleX(1)); } 
+            50% { transform: translateY(-10px) var(--espejo, scaleX(1)); } 
+            100% { transform: translateY(0px) var(--espejo, scaleX(1)); } 
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="invitationSong" loop preload="auto">
+        <source src="TU_CANCION.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicPlayBtn" class="play-btn-discreto" onclick="toggleMusic()">
+        <i id="musicIcon" class="fas fa-play"></i>
+    </button>
+
+    <div id="modalBanco" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <p class="title-fancy" style="font-size: 2.5rem; margin-bottom: 5px;">Datos Bancarios</p>
+            <i class="fas fa-university" style="font-size: 2rem; color: var(--color-dorado-brillante);"></i>
+            <div class="datos-banco">
+                <p><strong>Banco:</strong> BROU</p>
+                <p><strong>Caja de Ahorro $:</strong> 1234567-8</p>
+                <p><strong>Titular:</strong> Juan Pérez</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="invitation-container">
+        <!-- FONDO DINÁMICO (Se controla por JS) -->
+        <div class="animated-bg-wrapper" id="bg-wrapper">
+            <!-- El contenido se inyectará aquí (Imagen o Video) -->
+        </div>
+
+        <!-- PORTADA -->
+        <div id="cover" onclick="openInvitation()">
+            <div class="cover-titles">
+                <p style="color: var(--color-dorado-brillante); text-transform: uppercase; letter-spacing: 2px; font-size: var(--texto-mis15-tamano);">Nuestra Boda</p>
+                <h1 class="cover-name">Martina & Juan</h1>
+            </div>
+            
+            <div class="ver-invitacion-wrapper">
+                <span class="ver-invitacion-texto">ver invitación</span>
+                <i class="fas fa-chevron-down flecha-animada"></i>
+            </div>
+        </div>
+
+        <!-- INVITACIÓN PRINCIPAL -->
+        <div id="main-invitation">
+            <div class="content-layer">
+
+                <!-- INTRO -->
+                <section class="gold-section" id="sec-intro" style="margin-top: 30px;">
+                    <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--color-secundario-rosa-fuerte); font-weight: bold;">¡Damos el sí!</p>
+                    <p class="title-fancy" style="font-size: 3.5rem; margin: 10px 0;">Acompáñanos</p>
+                    <p style="font-style: italic;">"Hay momentos inolvidables<br> que se atesoran en el<br> corazón para siempre,<br> acompáñanos a vivir el nuestro."</p>
+                </section>
+
+                <div id="sec-foto-principal" class="marco-elegante">
+                    <img src="portada.jpg" alt="Foto Principal" onerror="this.style.display='none'">
+                </div>
+
+                <!-- RESERVA LA FECHA -->
+                <section class="gold-section" id="sec-reserva">
+                    <p class="txt-reserva">Agendá la fecha</p>
+                    <p class="txt-mes">noviembre 2026</p>
+                    
+                    <table class="calendar">
+                        <thead><tr> <th>L</th> <th>M</th> <th>M</th> <th>J</th> <th>V</th> <th>S</th> <th>D</th> </tr></thead>
+                        <tbody id="calendarBody"></tbody>
+                    </table>
+
+                    <div style="margin-top: 25px; border-top: 1px dashed var(--color-dorado-claro); padding-top: 20px;">
+                        <p class="txt-faltan" id="countdown-title">Faltan...</p>
+                        <div class="countdown-box">
+                            <div class="countdown-item"><span id="days" class="countdown-number">00</span><span class="countdown-label">Días</span></div>
+                            <div class="countdown-item"><span id="hours" class="countdown-number">00</span><span class="countdown-label">Horas</span></div>
+                            <div class="countdown-item"><span id="minutes" class="countdown-number">00</span><span class="countdown-label">Min</span></div>
+                            <div class="countdown-item"><span id="seconds" class="countdown-number">00</span><span class="countdown-label">Seg</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DÓNDE: CEREMONIA Y FIESTA -->
+                <section class="gold-section" id="sec-donde">
+                    <p class="title-fancy">Dónde</p>
+
+                    <!-- Ceremonia -->
+                    <p class="subtitle-gold">Ceremonia</p>
+                    <div style="margin: 10px 0;">
+                        <i class="fas fa-church" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
+                    </div>
+                    <p style="font-weight: bold;">Parroquia San José</p>
+                    <p>Calle Principal 456. Montevideo</p>
+                    <p style="margin-top: 8px; color: var(--color-secundario-rosa-fuerte); font-weight: bold;"><i class="far fa-clock"></i> Horario: 19:00 hs</p>
+                    <a href="LINK_MAPS_CEREMONIA" class="button-call">UBICACIÓN IGLESIA</a>
+
+                    <hr class="divider">
+
+                    <!-- Fiesta -->
+                    <p class="subtitle-gold">Fiesta</p>
+                    <div style="margin: 10px 0;">
+                        <i class="fas fa-glass-cheers" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
+                    </div>
+                    <p style="font-weight: bold;">Salón Aurora Palace</p>
+                    <p>Calle Las Flores 123. Montevideo</p>
+                    <p style="margin-top: 8px; color: var(--color-secundario-rosa-fuerte); font-weight: bold;"><i class="far fa-clock"></i> Horario: 21:00 hs</p>
+                    <a href="LINK_MAPS_FIESTA" class="button-call">UBICACIÓN SALÓN</a>
+                </section>
+
+                <!-- VESTIMENTA -->
+                <section class="gold-section" id="sec-vestimenta">
+                    <p class="title-fancy">Vestimenta</p>
+                    <div style="margin: 10px 0; display: flex; justify-content: center; gap: 15px;">
+                        <i class="fas fa-person-dress" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
+                        <i class="fas fa-user-tie" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
+                    </div>
+                    <p style="font-weight: bold; text-transform: uppercase; font-size: 1.2rem; margin-bottom: 5px;">Formal / Elegante</p>
+                    <p>Reservamos el color blanco<br> para la novia</p>
+                </section>
+
+                <!-- REGALO -->
+                <section class="gold-section" id="sec-regalo">
+                    <p class="title-fancy">Regalo</p>
+                    <i class="fas fa-gift" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
+                    <p style="margin-top: 10px;">Que nos acompañes es nuestro<br>mejor regalo. Si deseas<br> tener un detalle con nosotros,<br>puedes hacerlo a través<br> de la siguiente cuenta:</p>
+                    <button class="button-call" onclick="abrirModal()">VER DATOS</button>
+                </section>
+
+                <!-- ASISTENCIA -->
+                <section class="gold-section" id="sec-asistencia">
+                    <p class="title-fancy">Asistencia</p>
+                    <p id="texto-asistencia" style="margin-top: 10px;">¡Tu presencia es muy<br>importante para nosotros!</p>
+                    <a href="LINK_DE_TU_WHATSAPP" id="btn-whatsapp" class="button-call" style="display: none;">CONFIRMAR POR WHATSAPP</a>
+                    <a href="LINK_DE_TU_FORMULARIO" id="btn-form" class="button-call" style="display: none;">CONFIRMAR ASISTENCIA</a>
+                </section>
+
+                <!-- GALERÍA -->
+                <section class="gold-section" id="sec-galeria">
+                    <p class="title-fancy">Galería</p>
+                    <div class="gallery-container">
+                        <div class="gallery-slide" id="gallerySlide">
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto1.jpg" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto2.jpg" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto3.jpg" onerror="this.style.display='none'"></div></div>
+                             <div class="gallery-item"><div class="gallery-item-frame"><img src="foto4.jpg" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto5.jpg" onerror="this.style.display='none'"></div></div>
+                            <div class="gallery-item"><div class="gallery-item-frame"><img src="foto6.jpg" onerror="this.style.display='none'"></div></div>
+                        </div>
+                    </div>
+                    <div class="gallery-nav">
+                        <button type="button" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+
+                <!-- MÚSICA, FOTOS, IG -->
+                <section class="gold-section" id="sec-cancion" style="display: none;">
+                    <p class="title-fancy">Música</p>
+                    <i class="fas fa-headphones-alt" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
+                    <p style="margin-top: 10px;">¿Qué canción no puede<br> faltar en la fiesta?</p>
+                    <a href="LINK_FORMULARIO_O_SPOTIFY" class="button-call">SUGERIR CANCIÓN</a>
+                </section>
+
+                <section class="gold-section" id="sec-album" style="display: none;">
+                    <p class="title-fancy">Momentos</p>
+                    <i class="fas fa-camera" style="font-size: 2.2rem; color: var(--color-secundario-rosa-fuerte);"></i>
+                    <p style="margin-top: 10px;">Ayúdanos a capturar los mejores momentos subiendo tus fotos aquí.</p>
+                    <a href="LINK_GOOGLE_PHOTOS_O_DRIVE" class="button-call">COMPARTIR FOTOS</a>
+                </section>
+
+                <section class="gold-section" id="sec-ig" style="display: none;">
+                    <p class="title-fancy">Instagram</p>
+                    <i class="fab fa-instagram" style="font-size: 2.8rem; color: #E1306C;"></i>
+                    <p style="margin-top: 10px;">¡Usa nuestro hashtag para que no nos perdamos de nada!</p>
+                    <p style="font-weight: bold; color: var(--color-dorado-brillante); font-size: 1.4rem; margin-top: 5px;">#BodaMartinaYJuan</p>
+                    <a href="LINK_A_TU_PERFIL_O_HASHTAG" class="button-call">IR A INSTAGRAM</a>
+                </section>
+                
+                 <section class="gold-section box-frase" id="sec-frase">
+                    <p style="font-size: 1.2rem; font-style: italic; margin-top: 10px;">Te esperamos para compartir<br> este momento tan especial.<br> ¡Será un día <br>para recordar siempre!</p>
+                </section>
+
+                <div style="text-align: center; margin-top: 50px; padding-bottom: 60px; position: relative; z-index: 5;" id="sec-despedida">
+                    <p class="title-fancy" style="font-size: 3rem; position: relative; z-index: 20; margin-bottom: 15px;">¡No Falten!</p>
+                    <!-- Imagen de cierre alargada -->
+                    <img src="cierre.png" alt="Decoración de cierre" style="width: 200px; max-width: 80%; object-fit: contain; opacity: 0.9;" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================================= 
+        // ⚙️ PANEL GENERAL DE CONFIGURACIÓN JS
+        // =========================================================================
+        const CONF_INVITACION = {
+            // Fondo Interior
+            tipoFondo: "imagen",           // Escribe "imagen" o "video"
+            urlFondoImagen: "fondo.png",   // Nombre de la imagen si tipoFondo es "imagen"
+            urlFondoVideo: "fondo.mp4",    // Nombre del video si tipoFondo es "video"
+
+            // Detalles del Lacre
+            letraSello: "M&J",
+            
+            // Opciones de visibilidad
+            mostrarFotoPrincipal: false,    
+            mostrarGaleria: true,          
+            mostrarMusica: true,           
+            confirmarConFormulario: true, 
+            mostrarSugerenciaCancion: true,
+            mostrarAlbumFotos: true,       
+            mostrarInstagram: true,  
+            
+            // Fecha del evento
+            mesEvento: 11,                  
+            anioEvento: 2026,              
+            fechaExactaEvento: "november 21, 2026 21:00:00" 
+        };
+
+        const CONFIG_DECORACIONES = {
+            secIntro: { imagen: "", tamano: "112px", anclajeVertical: "arriba", distanciaVertical: "-80px", anclajeHorizontal: "derecha", distanciaHorizontal: "0px", voltearEspejo: true, animacionFlotar: true }
+        };
+
+        const cover = document.getElementById('cover');
+        const mainInvitation = document.getElementById('main-invitation');
+        const song = document.getElementById('invitationSong');
+        const musicBtn = document.getElementById('musicPlayBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const gallerySlide = document.getElementById('gallerySlide');
+        const modal = document.getElementById('modalBanco');
+        
+        let isPlaying = false;
+        let currentGallerySlide = 0;
+        let modalAbiertoPorHistorial = false;
+
+        function aplicarConfiguracion() {
+            // 1. Configurar Fondo Interior
+            const bgWrapper = document.getElementById('bg-wrapper');
+            if (CONF_INVITACION.tipoFondo === 'video') {
+                bgWrapper.innerHTML = `<video autoplay muted loop playsinline><source src="${CONF_INVITACION.urlFondoVideo}" type="video/mp4"></video>`;
+            } else {
+                bgWrapper.style.backgroundImage = `url('${CONF_INVITACION.urlFondoImagen}')`;
+                bgWrapper.style.backgroundSize = 'cover';
+                bgWrapper.style.backgroundPosition = 'center';
+            }
+
+            // 2. Configurar Secciones
+            if (!CONF_INVITACION.mostrarFotoPrincipal) document.getElementById('sec-foto-principal').style.display = 'none';
+            if (!CONF_INVITACION.mostrarGaleria) document.getElementById('sec-galeria').style.display = 'none';
+
+            if (CONF_INVITACION.confirmarConFormulario) {
+                document.getElementById('btn-whatsapp').style.display = 'none';
+                document.getElementById('btn-form').style.display = 'inline-block';
+            } else {
+                document.getElementById('btn-whatsapp').style.display = 'inline-block';
+                document.getElementById('btn-form').style.display = 'none';
+            }
+
+            if(CONF_INVITACION.mostrarSugerenciaCancion) document.getElementById('sec-cancion').style.display = 'block';
+            if(CONF_INVITACION.mostrarAlbumFotos) document.getElementById('sec-album').style.display = 'block';
+            if(CONF_INVITACION.mostrarInstagram) document.getElementById('sec-ig').style.display = 'block';
+        }
+
+        aplicarConfiguracion();
+
+        function openInvitation() {
+            cover.classList.add('hidden');
+            mainInvitation.style.display = 'block';
+            
+            const diaEvento = new Date(CONF_INVITACION.fechaExactaEvento).getDate();
+            generateCalendar(CONF_INVITACION.mesEvento, CONF_INVITACION.anioEvento, diaEvento); 
+            iniciarCuentaRegresiva();
+            
+            if (CONF_INVITACION.mostrarMusica) {
+                musicBtn.style.display = 'flex';
+                toggleMusic();
+            }
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                song.pause();
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-play');
+            } else {
+                let playPromise = song.play();
+                if (playPromise !== undefined) { 
+                    playPromise.catch(error => { 
+                        console.log("El navegador requiere interacción manual para reproducir."); 
+                    }); 
+                }
+                musicIcon.classList.remove('fa-play');
+                musicIcon.classList.add('fa-pause');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function abrirModal() {
+            modal.style.display = "flex";
+            setTimeout(() => modal.classList.add('show'), 10);
+            history.pushState({ modalOpen: true }, "", window.location.href);
+            modalAbiertoPorHistorial = true;
+        }
+
+        function cerrarModal(desdePopState = false) {
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = "none", 300);
+            if (modalAbiertoPorHistorial && !desdePopState) {
+                modalAbiertoPorHistorial = false;
+                history.back();
+            } else {
+                modalAbiertoPorHistorial = false;
+            }
+        }
+
+        window.addEventListener('popstate', (event) => {
+            if (modal.style.display === "flex") cerrarModal(true);
+        });
+
+        function generateCalendar(month, year, highlightDay) {
+            const calendarBody = document.getElementById('calendarBody');
+            calendarBody.innerHTML = ''; 
+            const firstDay = (new Date(year, month - 1)).getDay(); 
+            const daysInMonth = 32 - new Date(year, month - 1, 32).getDate();
+            
+            let date = 1;
+            for (let i = 0; i < 6; i++) { 
+                let row = document.createElement('tr');
+                for (let j = 0; j < 7; j++) { 
+                    if (i === 0 && j < (firstDay === 0 ? 6 : firstDay - 1)) {
+                        row.appendChild(document.createElement('td'));
+                    } else if (date > daysInMonth) {
+                        row.appendChild(document.createElement('td'));
+                    } else {
+                        let cell = document.createElement('td');
+                        let cellText = document.createTextNode(date);
+                        
+                        if (date === highlightDay) { 
+                            let span = document.createElement('span');
+                            span.classList.add('highlight-date');
+                            span.appendChild(cellText);
+                            cell.appendChild(span);
+                        } else {
+                            cell.appendChild(cellText);
+                        }
+                        row.appendChild(cell);
+                        date++;
+                    }
+                }
+                calendarBody.appendChild(row);
+                if (date > daysInMonth) break;
+            }
+        }
+
+        function iniciarCuentaRegresiva() {
+            const fechaEvento = new Date(CONF_INVITACION.fechaExactaEvento).getTime();
+
+            const timer = setInterval(() => {
+                const ahora = new Date().getTime();
+                const diferencia = fechaEvento - ahora;
+
+                if (diferencia > 0) {
+                    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                    const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+                    const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+                    document.getElementById("days").innerText = String(dias).padStart(2, '0');
+                    document.getElementById("hours").innerText = String(horas).padStart(2, '0');
+                    document.getElementById("minutes").innerText = String(minutos).padStart(2, '0');
+                    document.getElementById("seconds").innerText = String(segundos).padStart(2, '0');
+                } else {
+                    document.getElementById("days").innerText = "00";
+                    document.getElementById("hours").innerText = "00";
+                    document.getElementById("minutes").innerText = "00";
+                    document.getElementById("seconds").innerText = "00";
+                    document.getElementById("countdown-title").innerText = "¡Llegó el gran día!";
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        function showGallerySlide() {
+            const offset = -currentGallerySlide * 100;
+            gallerySlide.style.transform = `translateX(${offset}%)`;
+        }
+
+        function nextSlide() { 
+            const totalSlides = document.querySelectorAll('.gallery-item').length;
+            currentGallerySlide = (currentGallerySlide + 1) % totalSlides; 
+            showGallerySlide(); 
+        }
+
+        function prevSlide() { 
+            const totalSlides = document.querySelectorAll('.gallery-item').length;
+            currentGallerySlide = (currentGallerySlide - 1 + totalSlides) % totalSlides; 
+            showGallerySlide(); 
+        }
+    </script>
+</body>
+</html>
