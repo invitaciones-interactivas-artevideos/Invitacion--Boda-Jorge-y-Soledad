@@ -29,7 +29,7 @@
 
             /* 4. POSICIÓN DE TEXTOS DE LA PORTADA */
             --texto-mis15-tamano: 1.5rem; 
-            --titulos-mover-arriba-abajo: 90px; 
+            --titulos-mover-arriba-abajo: 110px; 
 
             /* 5. DISEÑO DE LAS CAJAS GENERALES (Transparencia Editable) */
             --cajas-fuente: var(--fuente-texto);
@@ -217,9 +217,9 @@
             <div class="datos-banco">
                 <!-- Cuenta 1 -->
                 <div style="margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
-                    <p><strong>Banco:</strong> BROU</p>
-                    <p><strong>Titular:</strong> Jorge</p>
-                    <p><strong>Cuenta:</strong> <span id="cuenta1">1234567-8</span></p>
+                    <p><strong>Banco:</strong> SANTANDER</p>
+                    <p><strong>Cuenta:</strong> <span id="cuenta1">1205276684 (desde mismo Banco)</span></p>
+                     <p><strong>Cuenta:</strong> <span id="cuenta1">0017001205276684(desde otro Banco)</span></p>
                     <div style="text-align: center;">
                         <button class="button-call" style="padding: 6px 15px; font-size: 0.75rem; margin-top: 10px;" onclick="copiarTexto('cuenta1')"><i class="far fa-copy"></i> COPIAR CUENTA 1</button>
                     </div>
@@ -229,9 +229,10 @@
                 
                 <!-- Cuenta 2 -->
                 <div style="margin-top: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
-                    <p><strong>Banco:</strong> Itaú</p>
+                    <p><strong>Banco:</strong> Santander</p>
                     <p><strong>Titular:</strong> Soledad</p>
-                    <p><strong>Cuenta:</strong> <span id="cuenta2">9876543-2</span></p>
+                    <p><strong>Cuenta:</strong> <span id="cuenta2">5205442210 (Tranf desde el mismo Banco)</span></p>
+                    <p><strong>Cuenta:</strong> <span id="cuenta2">0017005205442210 (tranf. desde otro Banco)</span></p>
                     <div style="text-align: center;">
                         <button class="button-call" style="padding: 6px 15px; font-size: 0.75rem; margin-top: 10px;" onclick="copiarTexto('cuenta2')"><i class="far fa-copy"></i> COPIAR CUENTA 2</button>
                     </div>
@@ -281,7 +282,7 @@
                 <!-- RESERVA LA FECHA -->
                 <section class="gold-section" id="sec-reserva">
                     <p class="txt-reserva">Agendá la fecha</p>
-                    <p class="txt-mes">diciembre 2026</p>
+                    <p class="txt-mes">enero 2027</p>
                     
                     <table class="calendar">
                         <thead><tr> <th>L</th> <th>M</th> <th>M</th> <th>J</th> <th>V</th> <th>S</th> <th>D</th> </tr></thead>
@@ -420,12 +421,12 @@
             mostrarGaleria: true,          
             mostrarMusica: true,           
             confirmarConFormulario: true, 
-            mostrarSugerenciaCancion: true,
-            mostrarAlbumFotos: true,       
-            mostrarInstagram: true,  
-            mesEvento: 11,                  
-            anioEvento: 2026,              
-            fechaExactaEvento: "november 21, 2026 21:00:00" 
+            mostrarSugerenciaCancion: false,
+            mostrarAlbumFotos: false,       
+            mostrarInstagram: false,  
+            mesEvento: 01,                  
+            anioEvento: 2027,              
+            fechaExactaEvento: "january 02, 2027 21:00:00" 
         };
 
         const cover = document.getElementById('cover');
