@@ -208,7 +208,7 @@
         <i id="musicIcon" class="fas fa-play"></i>
     </button>
 
-    <!-- MODAL DE DATOS BANCARIOS (AHORA CON 2 CUENTAS) -->
+    <!-- MODAL DE DATOS BANCARIOS (SIN BOTONES DE COPIAR) -->
     <div id="modalBanco" class="modal-overlay" onclick="cerrarModal(false, event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-modal" onclick="cerrarModal()">&times;</span>
@@ -217,28 +217,19 @@
             <div class="datos-banco">
                 <!-- Cuenta 1 -->
                 <div style="margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
-                    <p><strong>Banco:</strong> SANTANDER</p>
-                    <p><strong>Cuenta:</strong> <span id="cuenta1">1205276684 (desde mismo Banco)</span></p>
-                     <p><strong>Cuenta:</strong> <span id="cuenta1">0017001205276684(desde otro Banco)</span></p>
-                    <div style="text-align: center;">
-                        <button class="button-call" style="padding: 6px 15px; font-size: 0.75rem; margin-top: 10px;" onclick="copiarTexto('cuenta1')"><i class="far fa-copy"></i> COPIAR CUENTA 1</button>
-                    </div>
+                    <p><strong>Banco:</strong> BROU</p>
+                    <p><strong>Titular:</strong> Jorge</p>
+                    <p><strong>Cuenta:</strong> 1234567-8</p>
                 </div>
                 
                 <hr class="divider" style="margin: 10px auto; width: 100%;">
                 
                 <!-- Cuenta 2 -->
                 <div style="margin-top: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
-                    <p><strong>Banco:</strong> Santander</p>
+                    <p><strong>Banco:</strong> Itaú</p>
                     <p><strong>Titular:</strong> Soledad</p>
-                    <p><strong>Cuenta:</strong> <span id="cuenta2">5205442210 (Tranf desde el mismo Banco)</span></p>
-                    <p><strong>Cuenta:</strong> <span id="cuenta2">0017005205442210 (tranf. desde otro Banco)</span></p>
-                    <div style="text-align: center;">
-                        <button class="button-call" style="padding: 6px 15px; font-size: 0.75rem; margin-top: 10px;" onclick="copiarTexto('cuenta2')"><i class="far fa-copy"></i> COPIAR CUENTA 2</button>
-                    </div>
+                    <p><strong>Cuenta:</strong> 9876543-2</p>
                 </div>
-                
-                <p id="mensajeCopiado" style="color: green; font-weight: bold; font-size: 0.95rem; margin-top: 15px; display: none; text-align: center;">¡Número de cuenta copiado!</p>
             </div>
         </div>
     </div>
