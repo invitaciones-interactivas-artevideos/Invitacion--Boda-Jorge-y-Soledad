@@ -207,14 +207,12 @@
         <i id="musicIcon" class="fas fa-play"></i>
     </button>
 
-    <!-- MODAL DE DATOS BANCARIOS (SIN BOTONES DE COPIAR) -->
     <div id="modalBanco" class="modal-overlay" onclick="cerrarModal(false, event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <span class="close-modal" onclick="cerrarModal()">×</span>
             <p class="title-fancy" style="font-size: 2.5rem; margin-bottom: 5px;">Regalo</p>
             <i class="fas fa-university" style="font-size: 2rem; color: var(--color-dorado-brillante);"></i>
             <div class="datos-banco">
-                <!-- Cuenta 1 -->
                 <div style="margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
                     <p><strong>Banco:</strong> SANTANDER</p>
                     <p><strong>Sucursal:</strong> 17 - Ciudad De La Costa</p>
@@ -225,7 +223,6 @@
                 
                 <hr class="divider" style="margin: 10px auto; width: 100%;">
                 
-                <!-- Cuenta 2 -->
                 <div style="margin-top: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px;">
                     <p><strong>Banco:</strong> SANTANDER</p>
                     <p><strong>Sucursal:</strong> 17 - Ciudad De La Costa</p>
@@ -237,19 +234,15 @@
         </div>
     </div>
 
-    <!-- NUEVO MODAL PARA AMPLIAR FOTOS DE LA GALERÍA -->
     <div id="modalImagen" class="modal-overlay" onclick="cerrarModalImagen()">
-        <span class="close-modal" style="color: white; text-shadow: 0 0 10px black; top: 15px; right: 20px;">&times;</span>
+        <span class="close-modal" style="color: white; text-shadow: 0 0 10px black; top: 15px; right: 20px;">×</span>
         <img id="imagenAmpliada" src="" alt="Ampliada" style="max-width: 95%; max-height: 80vh; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.8); border: 2px solid var(--color-dorado-claro); object-fit: contain;" onclick="event.stopPropagation()">
     </div>
 
     <div class="invitation-container">
-        <!-- FONDO DINÁMICO -->
         <div class="animated-bg-wrapper" id="bg-wrapper">
-            <!-- El contenido se inyectará aquí -->
-        </div>
+            </div>
 
-        <!-- PORTADA -->
         <div id="cover" onclick="openInvitation()">
             <div class="cover-titles">
                 <p style="color: white; text-transform: uppercase; letter-spacing: 2px; font-size: var(--texto-mis15-tamano);">Nuestra Boda</p>
@@ -262,18 +255,15 @@
             </div>
         </div>
 
-        <!-- INVITACIÓN PRINCIPAL -->
         <div id="main-invitation">
             <div class="content-layer">
 
-                <!-- INTRO -->
                 <section class="gold-section" id="sec-intro" style="margin-top: 30px;">
                     <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--color-secundario-rosa-fuerte); font-weight: bold;">¡Damos el sí!</p>
                     <p class="title-fancy" style="font-size: 3.5rem; margin: 10px 0;">Acompáñanos</p>
                     <p style="font-style: italic;">"Hay momentos inolvidables<br> que se atesoran en el<br> corazón para siempre,<br> acompáñanos a vivir el nuestro."</p>
                 </section>
 
-                <!-- RESERVA LA FECHA -->
                 <section class="gold-section" id="sec-reserva">
                     <p class="txt-reserva">Agendá la fecha</p>
                     <p class="txt-mes">enero 2027</p>
@@ -294,11 +284,18 @@
                     </div>
                 </section>
 
-                <!-- DÓNDE: CEREMONIA Y FIESTA (Corregido aspecto de los botones) -->
                 <section class="gold-section" id="sec-donde">
                     <p class="title-fancy">Dónde</p>
 
-                    <!-- Ceremonia -->
+                    <p class="subtitle-gold">Cívil</p>
+                    <div style="margin: 10px 0;">
+                        <i class="fas fa-landmark" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i><i class="far fa-clock"></i> Horario: a confirmar</p>
+                    </div>
+                    <p style="font-weight: bold;">Registro Civil de Montevideo</p>
+                    <p>Calle Sarandí 428</p>
+
+                    <hr class="divider">
+
                     <p class="subtitle-gold">Ceremonia</p>
                     <div style="margin: 10px 0;">
                         <i class="fas fa-church" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
@@ -310,7 +307,6 @@
 
                     <hr class="divider">
 
-                    <!-- Fiesta -->
                     <p class="subtitle-gold">Fiesta</p>
                     <div style="margin: 10px 0;">
                         <i class="fas fa-glass-cheers" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
@@ -321,7 +317,6 @@
                     <a href="https://maps.app.goo.gl/eNeNLxd8LcLukdEZ7" class="button-call" target="_blank">VER UBICACIÓN </a>
                 </section>
 
-                <!-- VESTIMENTA -->
                 <section class="gold-section" id="sec-vestimenta">
                     <p class="title-fancy">Vestimenta</p>
                     <div style="margin: 10px 0; display: flex; justify-content: center; gap: 15px;">
@@ -332,7 +327,6 @@
                     <p>Reservamos los colores blanco<br>y beige para los novios</p>
                 </section>
 
-                <!-- REGALO -->
                 <section class="gold-section" id="sec-regalo">
                     <p class="title-fancy">Regalo</p>
                     <i class="fas fa-gift" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
@@ -340,7 +334,6 @@
                     <button class="button-call" onclick="abrirModal()">VER DATOS</button>
                 </section>
 
-                <!-- ASISTENCIA -->
                 <section class="gold-section" id="sec-asistencia">
                     <p class="title-fancy">Asistencia</p>
                     <p id="texto-asistencia" style="margin-top: 10px;">¡Tu presencia es muy<br>importante para nosotros.<br> Nos encantaría contar con vos. <br>Te pedimos, por favor, que nos <br>indiques si podrás acompañarnos o no,<br> antes del 15 de noviembre.</p>
@@ -348,7 +341,6 @@
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfJ3z4ViloAWBAF1iSj9nDFDRgukB8NaRHcM9PBKe1CleU8Tw/viewform?usp=sharing&ouid=108226770807790576500" id="btn-form" class="button-call" style="display: none;">CONFIRMAR ASISTENCIA</a>
                 </section>
 
-                <!-- GALERÍA (Se agregó el onclick para abrir imagen) -->
                 <section class="gold-section" id="sec-galeria">
                     <p class="title-fancy">Galería</p>
                     <div class="gallery-container">
@@ -365,12 +357,11 @@
                         </div>
                     </div>
                     <div class="gallery-nav">
-                        <button type="button" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-                        <button type="button" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+                        <button type="button" onclick="prevSlide(true)"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" onclick="nextSlide(true)"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </section>
 
-                <!-- MÚSICA, FOTOS, IG -->
                 <section class="gold-section" id="sec-cancion" style="display: none;">
                     <p class="title-fancy">Música</p>
                     <i class="fas fa-headphones-alt" style="font-size: 2.2rem; color: var(--color-dorado-brillante);"></i>
@@ -440,6 +431,7 @@
         let currentGallerySlide = 0;
         let modalAbiertoPorHistorial = false;
         let modalImgAbiertoPorHistorial = false;
+        let autoSlideTimer;
 
         function aplicarConfiguracion() {
             // Fondo
@@ -640,22 +632,39 @@
             }, 1000);
         }
 
+        /* --- CONTROL DE LA GALERÍA --- */
         function showGallerySlide() {
             const offset = -currentGallerySlide * 100;
             gallerySlide.style.transform = `translateX(${offset}%)`;
         }
 
-        function nextSlide() { 
+        function startAutoSlide() {
+            autoSlideTimer = setInterval(() => {
+                nextSlide(false);
+            }, 3000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideTimer);
+            startAutoSlide();
+        }
+
+        function nextSlide(isManual = false) { 
             const totalSlides = document.querySelectorAll('.gallery-item').length;
             currentGallerySlide = (currentGallerySlide + 1) % totalSlides; 
             showGallerySlide(); 
+            if (isManual) resetAutoSlide();
         }
 
-        function prevSlide() { 
+        function prevSlide(isManual = false) { 
             const totalSlides = document.querySelectorAll('.gallery-item').length;
             currentGallerySlide = (currentGallerySlide - 1 + totalSlides) % totalSlides; 
             showGallerySlide(); 
+            if (isManual) resetAutoSlide();
         }
+
+        // Iniciar el deslizamiento automático al cargar
+        startAutoSlide();
     </script>
 </body>
 </html>
